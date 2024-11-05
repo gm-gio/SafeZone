@@ -1,0 +1,58 @@
+create schema if not exists safe_zone;
+
+
+create table if not exists safe_zone.users
+(
+     user_id SERIAL PRIMARY KEY,
+     first_name VARCHAR(50) NOT NULL,
+     last_name VARCHAR(50) NOT NULL,
+     email VARCHAR(100) UNIQUE NOT NULL,
+     password VARCHAR(100) NOT NULL,
+     role VARCHAR(20) NOT NULL
+);
+
+create table if not exists safe_zone.notifications
+(
+    notification_id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    type VARCHAR(20) NOT NULL,
+    status VARCHAR(20) NOT NULL
+);
+
+create table if not exists safe_zone.groups
+(
+    group_id SERIAL PRIMARY KEY,
+    groupName VARCHAR(100) NOT NULL,
+    groupDescription TEXT
+);
+
+create table if not exists safe_zone.user_group
+(
+    user_id BIGINT NOT NULL,
+    group_id BIGINT NOT NULL,
+    PRIMARY KEY (user_id, group_id),
+    FOREIGN KEY (user_id) REFERENCES safe_zone.users (user_id) ON DELETE CASCADE,
+    FOREIGN KEY (group_id) REFERENCES safe_zone.groups (group_id) ON DELETE CASCADE
+);
+
+
+create table if not exists safe_zone.user_notification
+(
+    user_id BIGINT NOT NULL,
+    notification_id BIGINT NOT NULL,
+    read_at TIMESTAMP,
+    PRIMARY KEY (user_id, notification_id),
+    FOREIGN KEY (user_id) REFERENCES safe_zone.users (user_id) ON DELETE CASCADE,
+    FOREIGN KEY (notification_id) REFERENCES safe_zone.notifications (notification_id) ON DELETE CASCADE
+);
+
+create table if not exists safe_zone.group_notification
+(
+    group_id BIGINT NOT NULL,
+    notification_id BIGINT NOT NULL,
+    PRIMARY KEY (group_id, notification_id),
+    FOREIGN KEY (group_id) REFERENCES safe_zone.groups (group_id) ON DELETE CASCADE,
+    FOREIGN KEY (notification_id) REFERENCES safe_zone.notifications (notification_id) ON DELETE CASCADE
+)
