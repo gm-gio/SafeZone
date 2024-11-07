@@ -1,17 +1,14 @@
 package com.myproject.safezone.entity;
 
 import jakarta.persistence.*;
-import jakarta.websocket.OnError;
 import lombok.*;
 import org.hibernate.Hibernate;
-
 
 import java.util.Objects;
 import java.util.Set;
 
 @Getter
 @Setter
-@Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor

@@ -8,8 +8,6 @@ public class SafeZoneApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SafeZoneApplication.class, args);
-
 		System.out.println("Safe Zone");
 	}
-
 }

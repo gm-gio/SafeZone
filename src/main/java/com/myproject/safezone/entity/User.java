@@ -4,18 +4,16 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-
 import java.util.Objects;
 import java.util.Set;
 
+@Entity
+@ToString
 @Getter
 @Setter
-@Builder
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users", schema = "safe_zone")
-@Entity
 public class User {
 
     @Id
@@ -38,7 +36,7 @@ public class User {
 
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
-    private UserRole role;
+    private UserRole userRole;
 
     @ManyToMany
     @JoinTable(
@@ -48,6 +46,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "group_id")
     )
     @ToString.Exclude
+    @Getter
     private Set<Group> groups;
 
     @ManyToMany
